@@ -16,9 +16,9 @@ var changeImages = function(id,  interval) {
 	    var nextIndex = (i + 1);
 	    console.log("Remplacement de " + i + " par " + nextIndex); 
 	    if (nextIndex==imgtags.length) 
-		img.src = first;
+			img.src = first;
 	    else
-				img.src = imgtags[nextIndex].src;
+			img.src = imgtags[nextIndex].src;
 	}
     }
     

@@ -7,8 +7,8 @@ var Point = require("./module_shapes.js");
 var p = new Point(1, 2);
 
 // Importer le module Shapes
-var Point2 = require("./module_shapes2.js");
-var p = new Point2(1, 2);
+//var Point2 = require("./module_shapes2.js");
+//var p = new Point2(1, 2);
 
 // Importer le module Counter
 var Counter = require("./module_counter.js");

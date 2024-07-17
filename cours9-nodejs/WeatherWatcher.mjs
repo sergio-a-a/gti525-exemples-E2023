@@ -2,7 +2,6 @@
    de différentes villes en utilisant le service de open-meteo,
    et émet des événements lorsque les prévisions sont reçues */
 
-import { EventEmitter } from "events"
 import fetch from 'node-fetch' // npm install node-fetch
 
 // Fonction adaptée de: https://www.tjvantoll.com/2015/09/13/fetch-and-errors/
@@ -39,8 +38,18 @@ class WeatherWatcher {
               les fonctions fléchées, vous n'avez pas besoin de sauvegarder le
               contexte (let that = this).
             */
-
-
+            let timerId = setInterval(() => {
+                    fetch(buildOpenMeteoURL(city.latitude, city.longitude))
+                        .then(handleErrors)
+                        .then((response) => {
+                            let data = response.json()
+                            this.emitter.emit(city.name, data.current_weather)
+                        }).catch((error) => {
+                            console.log(error)
+                        })
+                }, 1000 * 60 * 60) // 1 heure
+                    
+                    this.timerIds.push(timerId)
         })
     }
     stop() {

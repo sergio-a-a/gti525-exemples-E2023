@@ -20,30 +20,25 @@ function AJAXRequest() {
 	}
     }
     xhr.ontimeout = function() {
-	console.log("Timed out");
+		console.log("Timed out");
     }
     xhr.onerror = function() {
-	console.log("Resulted in an error !");
+		console.log("Resulted in an error !");
     };  
     xhr.onabort = function() {
-	console.log("Aborted");
+		console.log("Aborted");
     };
 
     xhr.send();
 
     function swapImages(images) {
-
-	var imgs = document.getElementsByTagName("IMG");
-	
-	// Traiter l'objet JS result ici
-	for (var key in images) {
-	    
-	    imgs[parseInt(key)].src = images[key]; 
-	    
-	}
+		var imgs = document.getElementsByTagName("IMG");
 		
+		// Traiter l'objet JS result ici
+		for (var key in images) {
+			imgs[parseInt(key)].src = images[key]; 
+		}
     }
-    
 }
 
 window.onload = function() {

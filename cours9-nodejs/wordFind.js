@@ -15,6 +15,8 @@ if (process.argv.length < 4) {
 
 var fileName = process.argv[2];
 var textToFind = process.argv[3];
+
+
 var readStream = fs.createReadStream(fileName);;
 var oldBlob = "";
 var index = -1;
@@ -28,10 +30,13 @@ readStream.on("data", function(blob) {
 } );
 
 readStream.on("end", function() {
-    if (index>=0)
-	console.log("Chaîne trouvée: " + textToFind);
-    else
-	console.log("Chaîne introuvable: " + textToFind);
+    if (index>=0){
+	    console.log("Chaîne trouvée: " + textToFind);
+        readStream.close();
+    }
+    else{
+	    console.log("Chaîne introuvable: " + textToFind);
+    }
 } );
 
 readStream.on("error", function() {
