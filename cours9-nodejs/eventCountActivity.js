@@ -36,13 +36,13 @@ function registerEvents(emitter, keywords) {
         wordCounter[index]++;
     }
 
-    keywords.forEach((keyword, index, arr) => {
+    keywords.forEach((keyword, index) => {
         wordCounter[index] = 0;
         emitter.on(keyword, () => incrementCounter(index));
     });
     
     return function(){
-        wordCounter.forEach((wordCount, index, arr) => {
+        wordCounter.forEach((wordCount, index) => {
             console.log(`${keywords[index]}: ${wordCount}`)
         });
     }
