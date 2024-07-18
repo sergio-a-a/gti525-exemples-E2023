@@ -1,7 +1,9 @@
 // Solution à l'activité en classe -- Événements
 
 var EventEmitter = require('events').EventEmitter;
+
 if (! EventEmitter) process.exit(1);
+
 var fs = require("fs");
 
 function registerEvents(emitter, keywords) {
@@ -38,7 +40,9 @@ printCounts();
 // e.emit("a");
 // e.emit("the");
 var words = text.split(" ");
+
 words.forEach( function(word){
-		e.emit(word.trim());
-	});
+	e.emit(word.trim());
+});
+
 printCounts();
