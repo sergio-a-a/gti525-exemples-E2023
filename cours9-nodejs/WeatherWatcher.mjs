@@ -31,9 +31,11 @@ class WeatherWatcher {
               TODO: démarrer des timers qui vont récupérer périodiquement la météo
               aux villes demandées via des requêtes 'fetch' (l'URL sera obtenu
               en invoquant buildOpenMeteoURL).
+
               Lorsque la météo est reçue, émettre un événement correspondant
               au nom de la ville; le message sera les conditions météo actuelles
               ('current_weather').
+              
               Conseil: si votre fonction gestionnaire dans setInterval utilise
               les fonctions fléchées, vous n'avez pas besoin de sauvegarder le
               contexte (let that = this).

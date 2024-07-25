@@ -34,8 +34,89 @@ function monitorWeather() {
 // Démarrage le monitoring de la météo
 monitorWeather()
 
+
+
+/*
+    Reprenez l’exemple WeatherWatcher. Prenez comme base le fichier WeatherHTTPServer.mjs
+    et complétez le reste du code. Vous devez implémenter un serveur web simple à l’aide de l’API
+    http.createServer qui permettra de répondre aux requêtes suivantes:
+
+    Si le client demande un fichier JS, HTML ou une image (JPG, PNG), vous devez le
+    “servir” (ceci doit être non-sensible à la casse), avec un code de statut 200.
+    Si la lecture du fichier échoue, retournez un code 404
+
+    Si le client demande l’URL par défaut (/), retournez le fichier meteo.html
+
+    Si le client effectue une requête (on assume GET) à l’adresse /weather/${cityName}
+    (remplacez par le nom d’une ville parmi Montreal, Quebec ou Toronto):
+
+        Retournez les dernières prévisions pour cette ville, si elles sont disponibles, au format JSON,
+        et avec un code de statut 200.
+
+        Sinon, retournez un code de statut 400 (Bad Request) avec une chaîne vide.
+
+    Enfin, pour toute autre requête, vous devez retourner un code 404
+
+    Note: tous les fichiers statiques seront automatiquement servis à partir du répertoire /static/
+    (le mot static ne doit pas apparaître dans l’URL demandée par le client).
+*/
 var serveRequest = function(request, response) {
     // TODO: complétez votre code ici
+    if ( request.url.startsWith("/weather/") ) {
+        // Si c'est une requête /weather/, retourner la météo la plus récente pour la
+            // ville demandée
+            
+            // Extraire la ville
+            let city = request.url.substring("/weather/".length)
+    
+            console.log( "Ville: " + city );
+    
+            // Obtenir la météo
+            let weather = latestWeather[city]
+    
+            if (weather) {
+                // Retourner en JSON (sérialiser)
+                response.writeHead(200, {"Content-type": "application-json"});
+                response.write(JSON.stringify( latestWeather[city] ));
+                response.end();
+            } else {
+                // Retourner 400 Bad Request
+                response.writeHead(400)
+                response.write("")
+                response.end()
+            }
+        } else if ( request.url.endsWith(".html") || request.url.endsWith(".js") || request.url.endsWith(".jpg") || request.url.endsWith(".png") || request.url == "/" ) {
+        // Si c'est un fichier HTML, JS ou une image, récupérer et retourner le fichier demandé
+            if (request.url == "/")
+                request.url = "/meteo.html"
+    
+            response.statusCode = 200;
+    
+            var fileName = path + request.url;
+            var rs = fs.createReadStream(fileName);
+    
+            console.log("Lecture du fichier: " + fileName);
+    
+            rs.on("error", function(error) {
+                console.log(error);
+                response.write("Impossible de lire: " + fileName);
+                response.statusCode = 404;
+                response.end();
+            });
+    
+            rs.on("data", function(data) {
+                response.write(data);
+            });
+    
+            rs.on("end", function() {
+                response.end();
+            });
+    
+        } else {
+            response.write("Requete inconnue: " + request.url);
+            response.statusCode = 404;
+            response.end();
+        }
 };
 
 
@@ -44,3 +125,36 @@ var port = 8080;
 var server = http.createServer(serveRequest);
 server.listen(port);
 console.log("Démarrage du serveur sur le port: " + port);
+
+/*
+ request:           Node.js IncomingMessage Object
+    destroy()	 
+    headers	            Returns a key-value pair object containing header names and values
+    httpVersion	        Returns the HTTP version sent by the client
+    method	            Returns the request method
+    rawHeaders	        Returns an array of the request headers
+    rawTrailers	        Returns an array of the raw request trailer keys and values
+    setTimeout()	    Calls a specified function after a specified number of milliseconds
+    statusCode          Returns the HTTP response status code
+    socket	            Returns the Socket object for the connection
+    trailers	        Returns an object containing the trailers
+    url	                Returns the request URL string
+ 
+
+response:           HTTP ServerResponse Object
+    addTrailers()	    Adds HTTP trailing headers
+    end()	            Signals that the the server should consider that the response is complete
+    finished	        Returns true if the response is complete, otherwise false
+    getHeader()	        Returns the value of the specified header
+    headersSent	        Returns true if headers were sent, otherwise false
+    removeHeader()	    Removes the specified header
+    sendDate	        Set to false if the Date header should not be sent in the response. Default true
+    setHeader()	        Sets the specified header
+    setTimeout	        Sets the timeout value of the socket to the specified number of milliseconds
+    statusCode	        Sets the status code that will be sent to the client
+    statusMessage	    Sets the status message that will be sent to the client
+    write()	            Sends text, or a text stream, to the client
+    writeContinue()	    Sends a HTTP Continue message to the client
+    writeHead()	        Sends status and response headers to the client
+
+*/

@@ -43,5 +43,36 @@ const serveStatic = (req, res) => {
 /*
   TODO: complétez votre code ici
  */
+app.get("/*.html", serveStatic)
+app.get("/*.jpg", serveStatic)
+app.get("/*.js", serveStatic)
+app.get("/*.png", serveStatic)
+
+app.get('/', (req, res) => {
+    res.sendFile({url: 'meteo.html'}, {root: staticPath})
+
+    /* ou
+        req.url = 'meteo.html'
+        res.sendFile(req.url, {root: staticPath})
+    */
+})
+
+app.get("/weather/:city", (req, res) => {
+    const city = req.params.city;
+
+    const weather = latestWeather[city];
+
+    if(weather){
+        res.status(200).send(weather)
+    }else{
+        res.sendStatus(400);
+    }
+    
+})
+
+app.get('*', (req, res) => {
+    res.status(404).send("Erreur 404")
+})
+    
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))

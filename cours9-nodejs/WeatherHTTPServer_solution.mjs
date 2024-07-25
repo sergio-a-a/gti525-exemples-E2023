@@ -49,9 +49,9 @@ var serveRequest = function(request, response) {
 
         if (weather) {
             // Retourner en JSON (sérialiser)
-	    response.writeHead(200, {"Content-type": "application-json"});
-	    response.write(JSON.stringify( latestWeather[city] ));
-	    response.end();
+            response.writeHead(200, {"Content-type": "application-json"});
+            response.write(JSON.stringify( latestWeather[city] ));
+            response.end();
         } else {
             // Retourner 400 Bad Request
             response.writeHead(400)
@@ -62,26 +62,33 @@ var serveRequest = function(request, response) {
 	// Si c'est un fichier HTML, JS ou une image, récupérer et retourner le fichier demandé
         if (request.url == "/")
             request.url = "/meteo.html"
-	response.statusCode = 200;
-	var fileName = path + request.url;
-	var rs = fs.createReadStream(fileName);
-	console.log("Lecture du fichier: " + fileName);
-	rs.on("error", function(error) {
-	    console.log(error);
-	    response.write("Impossible de lire: " + fileName);
-	    response.statusCode = 404;
-	    response.end();
-	});
-	rs.on("data", function(data) {
-	    response.write(data);
-	});
-	rs.on("end", function() {
-	    response.end();
-	});
+
+        response.statusCode = 200;
+
+        var fileName = path + request.url;
+        var rs = fs.createReadStream(fileName);
+
+        console.log("Lecture du fichier: " + fileName);
+
+        rs.on("error", function(error) {
+            console.log(error);
+            response.write("Impossible de lire: " + fileName);
+            response.statusCode = 404;
+            response.end();
+        });
+
+        rs.on("data", function(data) {
+            response.write(data);
+        });
+
+        rs.on("end", function() {
+            response.end();
+        });
+
     } else {
-	response.write("Requete inconnue: " + request.url);
-	response.statusCode = 404;
-	response.end();
+        response.write("Requete inconnue: " + request.url);
+        response.statusCode = 404;
+        response.end();
     }
 };
 
