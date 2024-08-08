@@ -73,14 +73,38 @@ function handleErrors(response) {
 
 function getRedditRecentPosts(subreddit) {
     // TODO: étape 1: implémentez votre code ici
+    /* 
+    Vous devez implémenter une fonction getRedditRecentPosts(subreddit) qui retourne une
+    promesse qui une fois résolue permettra d’accéder aux dernières publications Reddit sur un subreddit
+    donné (un tableau d’objets RedditPost). Pour obtenir la liste des dernières publications pour
+    subreddit (e.g., etsmtl), vous devez faire une requête AJAX ou fetch (plus facile) à l’url
+    suivante: https://www.reddit.com/r/${subreddit}.json.
+    */
+
 }
 
 function getRedditPost(url) {
     // TODO: étape 2: implémentez votre code ici
+    /*
+        Vous devez implémenter une fonction similaire getRedditPost(url) qui retourne une
+        promesse qui une fois résolue permettra d’accéder aux informations détaillées d’une
+        publication donnée (ajoutez .json à l’URL). La promesse retournera un seul objet
+        RedditPost. Il s’agira essentiellement des mêmes informations que pour l’étape 1, sauf
+        que vous ajouterez les commentaires de premier niveau.
+
+    */
+
 }
 
 function printETSPosts() {
     // TODO: étape 3: implémentez votre code ici
+    /*
+        Vous devez implémenté une fonction printETSPosts() qui affiche les informations
+        des 10 dernières publications du subreddit etsmtl. Vous devrez appeler la
+        fonction getRedditRecentPosts() pour obtenir la liste des posts, puis parcourir
+        la liste pour afficher les informations de chaque post.
+    */
+
 }
 
 printETSPosts()

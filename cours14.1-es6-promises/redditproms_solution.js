@@ -74,16 +74,16 @@ function getRedditRecentPosts(subreddit) {
    
     const url = "https://www.reddit.com/r/" + subreddit + ".json"
     return fetch(url)
-	.then( handleErrors )
-	.then( response => response.json() )
-	.then( RedditPost.parsePosts );
+        .then( handleErrors )
+        .then( response => response.json() )
+        .then( RedditPost.parsePosts );
 }
 
 function getRedditPost(url) {
     return fetch(url)
-	.then( handleErrors )
-	.then( response => response.json() )
-	.then( RedditPost.parsePost );
+        .then( handleErrors )
+        .then( response => response.json() )
+        .then( RedditPost.parsePost );
 }
 
 function printETSPosts() {
