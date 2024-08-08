@@ -22,6 +22,7 @@ function trapColorChanges(oldColor, newColor) {
     const observer1 = new MutationObserver(function(mutationList, observer){
         for (const mutation of mutationList) {
             if(mutation.type === 'attributes'){
+                
                 console.log('mutation was observed', mutation);
 
                 if(mutation.attributeName === 'style'){
